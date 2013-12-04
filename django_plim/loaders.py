@@ -1,11 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from functools import partial
+
 from django.template.loader import BaseLoader
 
 from django.conf import settings
 from mako.lookup import TemplateLookup
+from django import template as django_template
 from plim import preprocessor as plim_preprocessor
+from mako.template import Template as MakoTemplate
+
+
+def patch_django_template():
+    django_template.Template = partial(MakoTemplate,
+                                       preprocessor=plim_preprocessor)
+
+
+def patch_mako_render():
+    original_render = MakoTemplate.render
+
+    def new_render(self, context):
+        return original_render(self, **context)
+
+    MakoTemplate.render = new_render
+
+patch_django_template()
+patch_mako_render()
 
 
 class Loader(BaseLoader):

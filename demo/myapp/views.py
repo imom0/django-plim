@@ -2,9 +2,11 @@
 # -*- coding: UTF-8 -*-
 
 from django.http import HttpResponse
-from django.template.loader import get_template
+from django_plim.loaders import Loader
+from django.template import Context, Template
 
 
 def home(request):
-    template = get_template('index.html')
-    return HttpResponse(template.render(hello=u'你好'))
+    template = Template('h2\n  ${hello}')
+    context = {'hello': u'你好'}
+    return HttpResponse(template.render(context))
