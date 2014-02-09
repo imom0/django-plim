@@ -3,7 +3,7 @@
 
 from unittest import TestCase
 
-from django_plim.template import Template
+from django_plim.template import Template, find_template_dirs
 
 
 class TemplateTestCase(TestCase):
@@ -16,3 +16,7 @@ class TemplateTestCase(TestCase):
         t = Template('h2\n  ${hello}')
         context = {'hello': u'你好'}
         self.assertEqual(t.render(**context), u'<h2>你好</h2>')
+
+    def test_template_dirs(self):
+        dirs = find_template_dirs()
+        self.assertEqual(dirs, [])
