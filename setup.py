@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='django_plim',
-    version='0.0.1',
+    version='0.1.0',
     author='iMom0',
     author_email='mobeiheart@gmail.com',
     description=('Introduce plim to django'),
@@ -13,6 +13,7 @@ setup(
     keywords='plim mako django slim',
     url='https://github.com/imom0/django-plim',
     install_requires=[
+        'django',
         'plim>=0.9.1',
     ],
     test_suite='nose.collector',
