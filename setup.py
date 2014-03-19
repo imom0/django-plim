@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from distutils.core import setup, Command
+# you can also import from setuptools
+
+class PyTest(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        import sys,subprocess
+        errno = subprocess.call([sys.executable, 'runtests.py'])
+        raise SystemExit(errno)
 
 
 setup(
@@ -16,8 +28,7 @@ setup(
         'django',
         'plim>=0.9.1',
     ],
-    test_suite='nose.collector',
-    tests_require='nose==1.3.0',
+    cmdclass = {'test': PyTest},
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Utilities',
